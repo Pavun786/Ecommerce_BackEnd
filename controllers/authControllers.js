@@ -8,7 +8,7 @@ import JWT from "jsonwebtoken";
   
      try{
       
-        const {name,email,password,phone,address,answer} = req.body;
+        const {name,email,password,phone,address,answer,role} = req.body;
      // Validations:
         if(!name){
             return res.send({error:"Username is required"})
@@ -40,7 +40,7 @@ import JWT from "jsonwebtoken";
         const hashedPassword = await hashPassword(password)
         
         //save
-        const user = await new userModel({name,email,phone,address,password:hashedPassword,answer}).save();
+        const user = await new userModel({name,email,phone,address,password:hashedPassword,answer,role}).save();
 
         res.status(201).send({
             success: true,
@@ -254,6 +254,22 @@ export const orderStatusController = async (req, res) => {
       res.status(500).send({
         success: false,
         message: "Error While Updateing Order",
+        error,
+      });
+    }
+  };
+
+  export const getAllUserController = async (req, res) => {
+    try {
+      const users = await userModel
+        .find({ role :{$eq:0}})
+        res.json(users);
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        success: false,
+        message: "Error WHile Geting All users",
         error,
       });
     }

@@ -1,5 +1,5 @@
 import express from "express";
-import {registerController,loginController,testController,forgotPasswordController, updateProfileController, getOrdersController, getAllOrdersController, orderStatusController} from "../controllers/authControllers.js"
+import {registerController,loginController,testController,forgotPasswordController, updateProfileController, getOrdersController, getAllOrdersController, orderStatusController,getAllUserController} from "../controllers/authControllers.js"
 import {requireSignIn,isAdmin} from "../middlewares/authMiddleware.js"
 
 //router object:
@@ -41,6 +41,9 @@ router.put(
     isAdmin,
     orderStatusController
   );
+
+  //get all users
+  router.get("/allUsers", getAllUserController);
 
   
   
